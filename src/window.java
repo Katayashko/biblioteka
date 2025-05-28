@@ -67,13 +67,11 @@ public class window {
 
                 if(selectedRow[0] >= 0){
                     if (zwrotWypozycz.czyZwrot){
-                        System.out.println("zwrot" + selectedRow[0]);
                         Book temp = books.get(selectedRow[0]);
                         temp.status = "Dostępna";
                         books.set(selectedRow[0], temp);
                         update(selectedRow[0], temp);
                     } else {
-                        System.out.println("Wypo" + selectedRow[0]);
                         Book temp = books.get(selectedRow[0]);
                         temp.status = "Wypożyczona";
                         books.set(selectedRow[0], temp);
@@ -100,6 +98,25 @@ public class window {
                 }
             }
         });
+        szukajButton.addActionListener(new ActionListener() {
+            String szukane = inputSzukaj.getText();
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                clearTable(books);
+                for (Book i: books) {
+                    if(i.name.equals(szukane)){
+                        model[0].addRow(new Object[]{i.name, i.author, i.rok, i.status});
+                    }
+                }
+            }
+        });
+    }
+
+    public void clearTable(List<Book> books){
+        final DefaultTableModel[] model = {(DefaultTableModel) bookTable.getModel()};
+        for (int i = 0; i < books.size(); i++) {
+            ((DefaultTableModel)bookTable.getModel()).removeRow(i);
+        }
     }
 
     public void initialize(){
