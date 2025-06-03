@@ -10,7 +10,7 @@ public class window {
 
     private JTextField inputSzukaj;
     private JButton szukajButton;
-    private JButton wyczyśćButton;
+    private JButton wyczyscButton;
     private JTable bookTable;
     private JPanel mainPanel;
     private JMenu fileMenu;
@@ -98,6 +98,18 @@ public class window {
                 }
             }
         });
+
+
+        wyczyscButton.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                clearTable(books);
+                for (Book i: books) {
+                    model[0].addRow(new Object[]{i.name, i.author, i.rok, i.status});
+                }
+            }
+        });
+
         szukajButton.addActionListener(new ActionListener() {
             String szukane = inputSzukaj.getText();
             @Override
@@ -114,7 +126,7 @@ public class window {
 
     public void clearTable(List<Book> books){
         final DefaultTableModel[] model = {(DefaultTableModel) bookTable.getModel()};
-        for (int i = 0; i < books.size(); i++) {
+        for (int i = 0; i < bookTable.getModel().getRowCount(); i++) {
             ((DefaultTableModel)bookTable.getModel()).removeRow(i);
         }
     }
